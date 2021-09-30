@@ -6,9 +6,14 @@ import "truffle/DeployedAddresses.sol";
 import "../../contracts/tweets/TweetStorage.sol";
 
 contract TestTweetStorage {
-  function testCreateTweet() public {
-    TweetStorage _storage = TweetStorage(DeployedAddresses.TweetStorage());
+  TweetStorage _storage;
 
+  constructor() {
+    _storage = new TweetStorage();
+    _storage.setControllerAddr(address(this));
+  }
+
+  function testCreateTweet() public {
     uint _userId = 1;
     uint _expectedTweetId = 1;
 
