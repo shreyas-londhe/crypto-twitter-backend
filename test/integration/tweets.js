@@ -1,9 +1,22 @@
+const utils = require("../utils");
+const { assertVMException } = utils;
+
 const TweetStorage = artifacts.require("TweetStorage");
 
 contract("tweets", () => {
-  before(async () => {
-    const tweetStorage = await TweetStorage.deployed();
-    await tweetStorage.createTweet(1, "Hello world!");
+  // before(async () => {
+  //   const tweetStorage = await TweetStorage.deployed();
+  //   await tweetStorage.createTweet(1, "Hello world!");
+  // });
+
+  it("can't create tweet without controller", async () => {
+    const storage = await TweetStorage.deployed();
+    try {
+      const tx = await storage.createTweet(1, "tristan");
+      assert.fail();
+    } catch (err) {
+      assertVMException(err);
+    }
   });
 
   it("can get tweet", async () => {
