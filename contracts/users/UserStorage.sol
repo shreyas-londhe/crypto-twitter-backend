@@ -1,23 +1,22 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract UserStorage {
+import '../helpers/BaseStorage.sol';
 
-  mapping(uint => Profile) profiles;
+contract UserStorage is BaseStorage {
 
-  struct Profile {
-    uint id;
-    bytes32 username;
-  }
+    struct Profile {
+        uint id;
+        bytes32 username;
+    }
 
-  uint latestUserId = 0;
+    mapping(uint => Profile) public profiles;
+
+    uint latestUserId = 0;
   
-  function createUser(bytes32 _username) public returns(uint) {
-    latestUserId++;  
-
-    profiles[latestUserId] = Profile(latestUserId, _username);
-
-    return latestUserId;
-  }
-
+    function createUser(bytes32 _username) public onlyController returns(uint) {
+        latestUserId++;  
+        profiles[latestUserId] = Profile(latestUserId, _username);
+        return latestUserId;
+    }
 }
