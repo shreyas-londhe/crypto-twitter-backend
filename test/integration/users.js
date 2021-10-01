@@ -17,9 +17,9 @@ contract("users", () => {
   });
 
   it("can create user with controller", async () => {
-    const storage = await UserStorage.deployed();
+    const controller = await UserController.deployed();
     const username = web3.utils.fromAscii("shryasss");
-    const tx = await storage.createUser(username);
+    const tx = await controller.createUser(username);
     assert.isOk(tx);
   });
 
